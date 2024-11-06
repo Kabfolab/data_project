@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Readmissions</title>
+    <style>
+        *{
+            
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1{
+            color:#991090;
+        }
+        h2{
+            color:201090;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hospital Readmissions Data Analysis</h1>
+
+    <h2>Data Overview</h2>
+    <p>Duplicates: {{ duplicates }}</p>
+    <p>Null Values: {{ null_values }}</p>
+
+    <h2>Table: First 5 Rows</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                {% if data %}
+                    <!-- Dynamically display the column headers based on the first row -->
+                    {% for key, value in data.0.items %}
+                        <th>{{ key }}</th>
+                    {% endfor %}
+                {% else %}
+                    <th>No data available</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through each row in the data -->
+            {% for row in data %}
+            <tr>
+                <!-- Loop through each column in the row -->
+                {% for key, value in row.items %}
+                <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    
+
+
+
+    <div style="align-items:center; text-align:center">
+
+        <h2 style="align-items:center; text-align:center">Descriptive Statistics (Numerical):{{ descriptive_stats|safe }}</h2>
+        
+
+        <h2 style="align-items:center; text-align:center">Descriptive Statistics (Categorical):{{ categorical_stats|safe }}</h2>
+        
+
+        <h2>Variance of Numerical Columns</h2>
+        <ul>
+            {% for key, value in numerical_variance.items %}
+            <li>{{ key }}: {{ value }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>T-Test Results</h2>
+        <p>T-statistic: {{ t_stat }}</p>
+        <p>P-value: {{ p_val }}</p>
+
+        <h2>Mean Age of Patients</h2>
+        <p>Mean age of readmitted patients: {{ mean_readmitted }}</p>
+        <p>Mean age of not readmitted patients: {{ mean_not_readmitted }}</p>
+
+
+
+        <h2>Chart: Age Category Countplot</h2>
+        <img src="{{ chart_url }}" alt="Age Category Countplot" style="width: 850px; margin-bottom: 20px;">
+
+        <h2>Chart: Primary Diagnosis Countplot</h2>
+        <img src="{{ chart_url }}" alt="Primary Diagnosis Countplot" style="width: 850px; margin-bottom: 20px;">
+
+        <h2>Chart: Readmission Pie Chart</h2>
+        <img src="{{ pie_chart_url }}" alt="Readmissions Pie Chart" style="width: 850px; margin-bottom: 20px;">
+
+        <h2>Chart: Non-Readmission Pie Chart</h2>
+        <img src="{{ pie_chart_non_diab_url }}" alt="Readmissions Pie Chart" style="width: 850px; margin-bottom: 20px;">
+
+        <h2>Chart: Histogram for Readmission By  Age</h2>
+        <img src="{{ age_chart }}" alt="Readmissions Pie Chart" style="width: 850px; margin-bottom: 20px;">
+
+        <h2>Chart: Correlation Heat Map</h2>
+        <img src="{{ heatmap_url }}" alt="Readmissions Pie Chart" style="width: 1300px; margin-bottom: 20px;">
+    </div>
+
+</body>
+</html>
